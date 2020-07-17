@@ -8,4 +8,4 @@ settings = {
     "login_url": "/login"
 }
 
-APP_PORT = 8888
+APP_PORT = 8005

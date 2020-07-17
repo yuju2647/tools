@@ -13,13 +13,13 @@ sys.setdefaultencoding('utf-8')
 import config
 import tornado.web
 import tornado.ioloop
+import tornado.options
+import tornado.httpserver
+from tornado.options import define,options
+from commons import router
 from handlers import *
 from handlers.ui import *
 from handlers.api import *
-import tornado.options
-import tornado.httpserver
-from commons import router
-from tornado.options import define,options
 
 
 class Application(tornado.web.Application):

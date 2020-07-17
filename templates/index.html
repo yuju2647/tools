@@ -3,13 +3,74 @@
 <html>
 <head>
     <title>Tools</title>
+    <meta charset=utf-8" version="1.0"/>
+    <script src="/static/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        function send(send_button) {
+            url = $(send_button)[0].parentElement.action
+            method = $(send_button)[0].parentElement.method
+            var data = $($(send_button)[0].parentElement).serialize()
+            $.post(url, data, function (data) {
+                    $("#datas").html(data)
+            })
+        }
+        /*字数限制*/
+        $("textarea").on("input propertychange", function() {
+            var $this = $(this),
+                _val = $this.val(),
+                count = "";
+            if (_val.length > 20) {
+                $this.val(_val.substring(0, 20));
+            }
+            count = 20 - $this.val().length;
+            $("#text-count").text(count);
+        });
+    </script>
 </head>
 <body>
-    <form action="/api/v1/str_to_list" method="post">
-        字符串：<textarea name="text" rows="10" cols="30">
+    <form action="/api/v1/str2list" method="post">
+        去除换行符：<textarea name="text" rows="10" cols="30">
 
         </textarea>
-        <input type="submit" value="发送">
+        引号包裹:<input type="checkbox" name="wrapper" checked="checked">
+        <input type="button" onclick="send(this)" value="发送">
     </form>
+
+    <form action="/api/v1/sqlResult2list" method="post">
+        sqlResult2List：<textarea name="text" rows="10" cols="30">
+
+        </textarea>
+        引号包裹:<input type="checkbox" name="wrapper">
+        <input type="button" onclick="send(this)"  value="发送">
+    </form>
+
+    <form action="/api/v1/time2stamp" method="post">
+        日期时间(%Y%m%d)<input name="date" type="text"></input>
+        00:00:00<input name="ms" type="radio" checked="checked" value="00:00:00">
+        23:59:59<input name="ms" type="radio" value="23:59:59">
+        <input type="button" onclick="send(this)"  value="发送">
+    </form>
+
+    <form action="/api/v1/set_tools" method="post">
+        集合操作<br/>
+        集合1<textarea name="set1" rows="10" cols="30"></textarea><br/>
+        交集<input name="sign" type="radio" checked="checked" value="&"><br/>
+        并集<input name="sign" type="radio"  value="|"><br/>
+        差集<input name="sign" type="radio"  value="-"><br/>
+        集合2<textarea name="set2" rows="10" cols="30"></textarea><br/>
+        引号包裹:<input type="checkbox" name="wrapper">
+        <input type="button" onclick="send(this)"  value="发送">
+    </form>
+
+
+
+    <br/>
+    <br/>
+    <br/>
+    <div id="datas">
+
+    </div>
+
+
 </body>
 </html>
